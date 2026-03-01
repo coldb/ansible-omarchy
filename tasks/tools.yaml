@@ -1,0 +1,6 @@
+- name: Install stow
+  become: true
+  package:
+    name: stow
+  tags:
+    - always

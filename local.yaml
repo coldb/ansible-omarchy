@@ -2,7 +2,4 @@
   connection: local
 
   tasks:
-    - name: Hello world
-      debug:
-        msg: "Hello from Omarchy!"
-      tags: hello
+    - import_tasks: tasks/tools.yaml

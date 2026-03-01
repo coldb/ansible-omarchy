@@ -2,8 +2,8 @@
 
 # Define available tags. Mark with :vault if --ask-vault-pass is needed.
 tags=(
-  "hello"
-  # "secrets:vault"
+  "install"
+  "update"
 )
 
 # ---
