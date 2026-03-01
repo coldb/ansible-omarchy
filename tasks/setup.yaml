@@ -1,0 +1,14 @@
+- block:
+  - name: Set global facts
+    set_fact:
+      username: "{{ ansible_facts['user_id'] }}"
+      home_dir: "{{ ansible_facts['env']['HOME'] }}"
+
+  - name: Display all facts
+    debug:
+      msg:
+      - "username: {{ username }}"
+      - "home_dir: {{ home_dir }}"
+
+  tags:
+    - always

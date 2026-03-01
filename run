@@ -2,8 +2,10 @@
 
 # Define available tags. Mark with :vault if --ask-vault-pass is needed.
 tags=(
-  "install"
-  "update"
+  "install:vault"
+  "install-ssh:vault"
+  "update:vault"
+  "update-ssh:vault"
 )
 
 # ---
@@ -59,4 +61,6 @@ if $needs_vault; then
   extra_flags+=("--ask-vault-pass")
 fi
 
-ansible-playbook local.yaml --tags "$requested_tags" "${extra_flags[@]}" "$@"
+ansible-galaxy collection install -r collections/requirements.yaml
+
+ansible-playbook local.yaml -i inventory.ini --tags "$requested_tags" --ask-become-pass "${extra_flags[@]}" "$@"
