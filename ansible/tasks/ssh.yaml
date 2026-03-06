@@ -3,7 +3,7 @@
   - name: Set SSH key facts
     set_fact:
       key_files:
-        - { source: "{{ playbook_dir }}/.ssh/id_ed25519_gh", target: "{{ home_dir }}/.ssh/id_ed25519_gh" }
+        - { source: "{{ dotfiles_dir }}/.ssh/id_ed25519_gh", target: "{{ home_dir }}/.ssh/id_ed25519_gh" }
 
   - name: Ensure .ssh directory exists
     file:

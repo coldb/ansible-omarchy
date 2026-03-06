@@ -61,6 +61,6 @@ if $needs_vault; then
   extra_flags+=("--ask-vault-pass")
 fi
 
-ansible-galaxy collection install -r collections/requirements.yaml
+ansible-galaxy collection install -r ansible/collections/requirements.yaml
 
-ansible-playbook local.yaml -i inventory.ini --tags "$requested_tags" --ask-become-pass "${extra_flags[@]}" "$@"
+ansible-playbook ansible/local.yaml -i ansible/inventory.ini --tags "$requested_tags" --ask-become-pass "${extra_flags[@]}" "$@"
