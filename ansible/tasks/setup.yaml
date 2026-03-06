@@ -17,5 +17,12 @@
     package:
       name: stow
 
+  - name: Setup the bin dotfiles
+    command: "./stow_install"
+    args:
+      chdir: "{{ dotfiles_dir }}"
+    environment:
+      STOW_FOLDERS: "bin"
+
   tags:
     - always

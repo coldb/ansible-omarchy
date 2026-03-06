@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+DOTFILES="${DOTFILES:-$HOME/ansible-omarchy/dotfiles}"
+STOW_FOLDERS="${STOW_FOLDERS:-zsh}"
+STOW_TARGET="${STOW_TARGET:-$HOME}"
+
+pushd "$DOTFILES"
+
+for folder in $(echo $STOW_FOLDERS | sed "s/,/ /g")
+do
+  echo "stow $folder"
+  stow -R -t "$STOW_TARGET" $folder
+done
+
+popd
