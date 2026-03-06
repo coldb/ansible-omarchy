@@ -2,11 +2,13 @@
 
 # Define available tags. Mark with :vault if --ask-vault-pass is needed.
 tags=(
-  "setup"
   "install:vault"
   "install-ssh:vault"
+  "install-zsh"
+  "setup"
   "update:vault"
   "update-ssh:vault"
+  "update-zsh"
 )
 
 # ---
