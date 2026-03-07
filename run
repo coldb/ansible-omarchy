@@ -26,6 +26,12 @@ for entry in "${tags[@]}"; do
   fi
 done
 
+verbosity=""
+if [[ "$1" =~ ^-v{1,4}$ ]]; then
+  verbosity="$1"
+  shift
+fi
+
 if [ -n "$1" ]; then
   requested_tags="$1"
   shift
@@ -68,4 +74,4 @@ fi
 
 ansible-galaxy collection install -r ansible/collections/requirements.yaml
 
-ansible-playbook ansible/local.yaml -i ansible/inventory.ini --tags "$requested_tags" --ask-become-pass "${extra_flags[@]}" "$@"
+ansible-playbook ansible/local.yaml -i ansible/inventory.ini --tags "$requested_tags" --ask-become-pass ${verbosity} "${extra_flags[@]}" "$@"
