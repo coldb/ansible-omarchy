@@ -4,10 +4,12 @@
 tags=(
   "install:vault"
   "install-ssh:vault"
+  "install-tmux"
   "install-zsh"
   "setup"
   "update:vault"
   "update-ssh:vault"
+  "update-tmux"
   "update-zsh"
 )
 
