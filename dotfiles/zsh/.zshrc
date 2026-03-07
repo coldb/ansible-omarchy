@@ -139,7 +139,6 @@ export PATH=~/.npm-global/bin:$PATH
 # Alias commands
 alias b64dec="~/.local/scripts/base64-decode.sh"
 alias b64enc="~/.local/scripts/base64-encode.sh"
-alias tmux="tmux -f ~/.tmux.conf"
 
 if [[ -d ~/.rd/bin ]]; then
   export PATH="$HOME/.rd/bin:$PATH"
