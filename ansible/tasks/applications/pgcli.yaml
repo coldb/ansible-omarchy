@@ -1,0 +1,11 @@
+- block:
+  - name: Install pgcli
+    become: true
+    package:
+      name: pgcli
+
+  tags:
+    - install
+    - install-pgcli
+    - update
+    - update-pgcli

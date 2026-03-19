@@ -1,0 +1,16 @@
+- block:
+  - name: Install flux-bin
+    become: true
+    become_user: aur_builder
+    kewlfft.aur.aur:
+      name: flux-bin
+      state: present
+      use: yay
+
+  tags:
+    - install
+    - install-flux
+    - install-k8s-tools
+    - update
+    - update-flux
+    - update-k8s-tools
