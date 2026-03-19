@@ -1,0 +1,13 @@
+- block:
+  - name: Install cursor
+    become: true
+    package:
+      name: cursor-bin
+
+  tags:
+    - install
+    - install-ai
+    - install-cursor
+    - update
+    - update-ai
+    - update-cursor

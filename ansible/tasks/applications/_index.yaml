@@ -1,5 +1,8 @@
+- import_tasks: ai/_index.yaml
+- import_tasks: browsers/_index.yaml
 - import_tasks: flux.yaml
 - import_tasks: k9s.yaml
 - import_tasks: kubectl.yaml
 - import_tasks: pgcli.yaml
+- import_tasks: thunderbird.yaml
 - import_tasks: tmux.yaml

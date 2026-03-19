@@ -1,0 +1,16 @@
+- block:
+  - name: Install brave
+    become: true
+    become_user: aur_builder
+    kewlfft.aur.aur:
+      name: brave-bin
+      state: present
+      use: yay
+
+  tags:
+    - install
+    - install-brave
+    - install-browsers
+    - update
+    - update-brave
+    - update-browsers

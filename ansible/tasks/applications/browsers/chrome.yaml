@@ -1,0 +1,16 @@
+- block:
+  - name: Install chrome
+    become: true
+    become_user: aur_builder
+    kewlfft.aur.aur:
+      name: google-chrome
+      state: present
+      use: yay
+
+  tags:
+    - install
+    - install-chrome
+    - install-browsers
+    - update
+    - update-chrome
+    - update-browsers
