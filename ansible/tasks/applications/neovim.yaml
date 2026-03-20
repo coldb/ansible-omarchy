@@ -1,0 +1,18 @@
+- block:
+  - name: Install neovim
+    become: true
+    package:
+      name: neovim
+
+  - name: Stow neovim dotfiles
+    command: "./stow_install"
+    args:
+      chdir: "{{ dotfiles_dir }}"
+    environment:
+      STOW_FOLDERS: "neovim"
+
+  tags:
+    - install
+    - install-neovim
+    - update
+    - update-neovim
