@@ -38,6 +38,16 @@ _G.open_or_create_file = open_or_create_file
 
 vim.api.nvim_set_keymap("n", "<leader>n", "<Cmd>lua open_or_create_file()<CR>", { noremap = true, silent = true })
 
+-- Check for external file changes when focusing Neovim or leaving a terminal
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  group = vim.api.nvim_create_augroup("checktime", { clear = true }),
+  callback = function()
+    if vim.o.buftype ~= "nofile" then
+      vim.cmd("checktime")
+    end
+  end,
+})
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`

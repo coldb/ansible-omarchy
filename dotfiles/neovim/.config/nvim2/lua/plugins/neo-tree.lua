@@ -21,6 +21,7 @@ return {
       },
     },
     filesystem = {
+      use_libuv_file_watcher = true,
       window = {
         mappings = {
           ["\\"] = "close_window",
