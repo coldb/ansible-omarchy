@@ -1,5 +1,5 @@
 - block:
-  - name: Install cursor
+  - name: Install Cursor
     become: true
     package:
       name: cursor-bin

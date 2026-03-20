@@ -1,5 +1,5 @@
 - block:
-  - name: Install claude-code
+  - name: Install Claude Code
     become: true
     package:
       name: claude-code
