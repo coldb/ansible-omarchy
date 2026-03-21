@@ -1,0 +1,29 @@
+- block:
+  - name: Check for existing hyprland dotfiles
+    stat:
+      path: "{{ home_dir }}/.config/hypr/{{ item }}"
+    loop:
+      - autostart.conf
+      - bindings.conf
+      - looknfeel.conf
+    register: hyprland_dotfiles
+
+  - name: Remove existing hyprland dotfiles if not symlinks
+    file:
+      path: "{{ item.stat.path }}"
+      state: absent
+    loop: "{{ hyprland_dotfiles.results }}"
+    when: item.stat.exists and not item.stat.islnk
+
+  - name: Stow hyprland dotfiles
+    command: "./stow_install"
+    args:
+      chdir: "{{ dotfiles_dir }}"
+    environment:
+      STOW_FOLDERS: "hypr"
+
+  tags:
+    - install
+    - install-hyprland
+    - update
+    - update-hyprland

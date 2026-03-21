@@ -5,4 +5,6 @@
     - import_tasks: tasks/setup.yaml
     - import_tasks: tasks/applications/_index.yaml
     - import_tasks: tasks/ssh.yaml
+    - import_tasks: tasks/desktop/_index.yaml
     - import_tasks: tasks/shell/_index.yaml
+    - import_tasks: tasks/terminal/_index.yaml

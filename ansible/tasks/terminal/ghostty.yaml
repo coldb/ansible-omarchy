@@ -1,0 +1,24 @@
+- block:
+  - name: Check for existing ghostty dotfiles
+    stat:
+      path: "{{ home_dir }}/.config/ghostty/config"
+    register: ghostty_config
+
+  - name: Remove existing ghostty dotfiles if not symlinks
+    file:
+      path: "{{ ghostty_config.stat.path }}"
+      state: absent
+    when: ghostty_config.stat.exists and not ghostty_config.stat.islnk
+
+  - name: Stow ghostty dotfiles
+    command: "./stow_install"
+    args:
+      chdir: "{{ dotfiles_dir }}"
+    environment:
+      STOW_FOLDERS: "ghostty"
+
+  tags:
+    - install
+    - install-ghostty
+    - update
+    - update-ghostty
