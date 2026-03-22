@@ -108,7 +108,7 @@ source ~/.zsh_profile
 
 # Neovim config
 if command -v nvim &> /dev/null; then
-  alias vi=nvim
+  alias vi="NVIM_APPNAME=nvim2 nvim"
   alias vim=nvim
   export EDITOR="/usr/local/bin/nvim"
 fi
