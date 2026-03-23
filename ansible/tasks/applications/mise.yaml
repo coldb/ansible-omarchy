@@ -1,0 +1,28 @@
+- name: Install mise
+  tags:
+    - install
+    - install-development
+    - install-mise
+    - update
+    - update-development
+    - update-mise
+  block:
+    - name: Install mise
+      become: true
+      package:
+        name: mise
+
+    - name: Remove existing mise config before stowing
+      file:
+        path: "{{ home_dir }}/.config/mise/config.toml"
+        state: absent
+
+    - name: Stow mise dotfiles
+      command: "./stow_install"
+      args:
+        chdir: "{{ dotfiles_dir }}"
+      environment:
+        STOW_FOLDERS: "mise"
+
+    - name: Install mise tools from config
+      command: mise install

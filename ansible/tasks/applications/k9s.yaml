@@ -6,8 +6,10 @@
 
   tags:
     - install
+    - install-development
     - install-k8s-tools
     - install-k9s
     - update
+    - update-development
     - update-k8s-tools
     - update-k9s

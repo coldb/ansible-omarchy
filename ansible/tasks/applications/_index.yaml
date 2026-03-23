@@ -3,6 +3,7 @@
 - import_tasks: flux.yaml
 - import_tasks: k9s.yaml
 - import_tasks: kubectl.yaml
+- import_tasks: mise.yaml
 - import_tasks: neovim.yaml
 - import_tasks: pgcli.yaml
 - import_tasks: thunderbird.yaml

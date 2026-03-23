@@ -13,6 +13,8 @@
 
   tags:
     - install
+    - install-development
     - install-neovim
     - update
+    - update-development
     - update-neovim

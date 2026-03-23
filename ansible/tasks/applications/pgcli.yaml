@@ -6,6 +6,8 @@
 
   tags:
     - install
+    - install-development
     - install-pgcli
     - update
+    - update-development
     - update-pgcli
