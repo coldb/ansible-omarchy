@@ -1,9 +1,4 @@
-- block:
-  - name: Install k9s
-    become: true
-    package:
-      name: k9s
-
+- name: Applciations - K9S
   tags:
     - install
     - install-development
@@ -13,3 +8,9 @@
     - update-development
     - update-k8s-tools
     - update-k9s
+
+  block:
+    - name: Install k9s
+      become: true
+      package:
+        name: k9s

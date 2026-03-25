@@ -1,43 +1,47 @@
-- block:
-  - name: Install zsh
-    become: true
-    package:
-      name: zsh
-    tags:
-      - update
-      - update-zsh
-
-  - name: Configure Ghostty to use zsh
-    ansible.builtin.lineinfile:
-      path: "{{ home_dir }}/.config/ghostty/config"
-      regexp: "^command\\s*="
-      line: "command = /usr/bin/zsh"
-      create: true
-
-  - name: Check that .oh-my-zsh exists
-    stat:
-      path: "{{ home_dir }}/.oh-my-zsh"
-    register: oh_my_stats
-
-  - name: Install oh-my-zsh
-    shell: >
-      curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-      -o /tmp/oh-my-zsh-installer.sh &&
-      chmod +x /tmp/oh-my-zsh-installer.sh &&
-      /tmp/oh-my-zsh-installer.sh --unattended
-    when: not oh_my_stats.stat.exists
-
-  - name: Install zsh-autosuggestions plugin
-    ansible.builtin.git:
-      repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
-      dest: "{{ home_dir }}/.oh-my-zsh/plugins/zsh-autosuggestions"
-
-  - name: Stow zsh dotfiles
-    stow:
-      folders: [zsh]
-      dotfiles_dir: "{{ dotfiles_dir }}"
-      force: true
-
+- name: Shell - ZSH
   tags:
     - install
     - install-zsh
+
+  block:
+    - name: Install zsh
+      become: true
+      package:
+        name: zsh
+      tags:
+        - update
+        - update-zsh
+
+    - name: Configure Ghostty to use zsh
+      ansible.builtin.lineinfile:
+        path: "{{ home_dir }}/.config/ghostty/config"
+        regexp: "^command\\s*="
+        line: "command = /usr/bin/zsh"
+        create: true
+        mode: "0644"
+
+    - name: Check that .oh-my-zsh exists
+      stat:
+        path: "{{ home_dir }}/.oh-my-zsh"
+      register: oh_my_stats
+
+    # TODO: install https://aur.archlinux.org/packages/oh-my-zsh-git
+    - name: Install oh-my-zsh
+      shell: >
+        curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        -o /tmp/oh-my-zsh-installer.sh &&
+        chmod +x /tmp/oh-my-zsh-installer.sh &&
+        /tmp/oh-my-zsh-installer.sh --unattended
+      when: not oh_my_stats.stat.exists
+
+    # TODO: install the https://archlinux.org/packages/extra/any/zsh-autosuggestions/
+    - name: Install zsh-autosuggestions plugin
+      ansible.builtin.git:
+        repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+        dest: "{{ home_dir }}/.oh-my-zsh/plugins/zsh-autosuggestions"
+
+    - name: Stow zsh dotfiles
+      stow:
+        folders: [zsh]
+        dotfiles_dir: "{{ dotfiles_dir }}"
+        force: true

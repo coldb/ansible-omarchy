@@ -1,9 +1,4 @@
-- block:
-  - name: Install Claude Code
-    become: true
-    package:
-      name: claude-code
-
+- name: Applications - AI - Claude Code
   tags:
     - install
     - install-ai
@@ -11,3 +6,9 @@
     - update
     - update-ai
     - update-claude-code
+
+  block:
+    - name: Install Claude Code
+      become: true
+      package:
+        name: claude-code

@@ -1,9 +1,4 @@
-- block:
-  - name: Install kubectl
-    become: true
-    package:
-      name: kubectl
-
+- name: Applications - KubeCtl
   tags:
     - install
     - install-development
@@ -13,3 +8,9 @@
     - update-development
     - update-k8s-tools
     - update-kubectl
+
+  block:
+    - name: Install kubectl
+      become: true
+      package:
+        name: kubectl

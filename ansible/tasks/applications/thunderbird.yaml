@@ -1,11 +1,12 @@
-- block:
-  - name: Install thunderbird
-    become: true
-    package:
-      name: thunderbird
-
+- name: Applications - Thunderbird
   tags:
     - install
     - install-thunderbird
     - update
     - update-thunderbird
+
+  block:
+    - name: Install thunderbird
+      become: true
+      package:
+        name: thunderbird

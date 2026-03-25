@@ -1,41 +1,43 @@
-- block:
-  - name: Set global facts
-    set_fact:
-      username: "{{ ansible_facts['user_id'] }}"
-      home_dir: "{{ ansible_facts['env']['HOME'] }}"
-      dotfiles_dir: "{{ playbook_dir }}/../dotfiles"
-
-  - name: Display all facts
-    debug:
-      msg:
-      - "username: {{ username }}"
-      - "home_dir: {{ home_dir }}"
-      - "dotfiles_dir: {{ dotfiles_dir }}"
-
-  - name: Install stow
-    become: true
-    package:
-      name: stow
-
-  - name: Create aur_builder user
-    become: true
-    ansible.builtin.user:
-      name: aur_builder
-      create_home: true
-      group: wheel
-
-  - name: Allow aur_builder to run pacman without password
-    become: true
-    ansible.builtin.lineinfile:
-      path: /etc/sudoers.d/11-install-aur_builder
-      line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
-      create: true
-      validate: "visudo -cf %s"
-
-  - name: Setup the bin dotfiles
-    stow:
-      folders: [bin]
-      dotfiles_dir: "{{ dotfiles_dir }}"
-
+- name: Setup
   tags:
     - always
+
+  block:
+    - name: Set global facts
+      set_fact:
+        username: "{{ ansible_facts['user_id'] }}"
+        home_dir: "{{ ansible_facts['env']['HOME'] }}"
+        dotfiles_dir: "{{ playbook_dir }}/../dotfiles"
+
+    - name: Display all facts
+      debug:
+        msg:
+          - "username: {{ username }}"
+          - "home_dir: {{ home_dir }}"
+          - "dotfiles_dir: {{ dotfiles_dir }}"
+
+    - name: Install stow
+      become: true
+      package:
+        name: stow
+
+    - name: Create aur_builder user
+      become: true
+      ansible.builtin.user:
+        name: aur_builder
+        create_home: true
+        group: wheel
+
+    - name: Allow aur_builder to run pacman without password
+      become: true
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers.d/11-install-aur_builder
+        line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+        create: true
+        mode: "0440"
+        validate: "visudo -cf %s"
+
+    - name: Setup the bin dotfiles
+      stow:
+        folders: [bin]
+        dotfiles_dir: "{{ dotfiles_dir }}"

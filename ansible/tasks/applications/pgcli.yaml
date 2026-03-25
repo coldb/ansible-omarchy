@@ -1,9 +1,4 @@
-- block:
-  - name: Install pgcli
-    become: true
-    package:
-      name: pgcli
-
+- name: Applications - pgcli
   tags:
     - install
     - install-development
@@ -11,3 +6,9 @@
     - update
     - update-development
     - update-pgcli
+
+  block:
+    - name: Install pgcli
+      become: true
+      package:
+        name: pgcli

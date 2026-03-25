@@ -2,9 +2,15 @@
   connection: local
 
   tasks:
-    - import_tasks: tasks/setup.yaml
-    - import_tasks: tasks/applications/_index.yaml
-    - import_tasks: tasks/ssh.yaml
-    - import_tasks: tasks/desktop/_index.yaml
-    - import_tasks: tasks/shell/_index.yaml
-    - import_tasks: tasks/terminal/_index.yaml
+    - name: Setup
+      import_tasks: tasks/setup.yaml
+    - name: Applications
+      import_tasks: tasks/applications/_index.yaml
+    - name: SSH
+      import_tasks: tasks/ssh.yaml
+    - name: Desktop
+      import_tasks: tasks/desktop/_index.yaml
+    - name: Shell
+      import_tasks: tasks/shell/_index.yaml
+    - name: Terminal
+      import_tasks: tasks/terminal/_index.yaml

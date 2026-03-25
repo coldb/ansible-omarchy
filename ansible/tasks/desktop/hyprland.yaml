@@ -1,15 +1,17 @@
-- block:
-  - name: Stow hyprland dotfiles
-    stow:
-      folders: [hypr]
-      dotfiles_dir: "{{ dotfiles_dir }}"
-      force: true
-
-  - name: Reload hyprland config
-    command: hyprctl reload
-
+- name: Desktop - Hyprland
   tags:
     - install
     - install-hyprland
     - update
     - update-hyprland
+
+  block:
+    - name: Stow hyprland dotfiles
+      stow:
+        folders: [hypr]
+        dotfiles_dir: "{{ dotfiles_dir }}"
+        force: true
+
+    - name: Reload hyprland config
+      command: hyprctl reload
+      changed_when: false

@@ -1,33 +1,34 @@
-- block:
-  - name: Install tmux
-    become: true
-    package:
-      name: tmux
-
-  - name: Install tmux bash completion
-    become: true
-    become_user: aur_builder
-    kewlfft.aur.aur:
-      name: tmux-bash-completion-git
-      state: present
-      use: yay
-
-  - name: Install tmux plugin manager
-    become: true
-    become_user: aur_builder
-    kewlfft.aur.aur:
-      name: tmux-plugin-manager
-      state: present
-      use: yay
-
-  - name: Stow tmux dotfiles
-    stow:
-      folders: [tmux]
-      dotfiles_dir: "{{ dotfiles_dir }}"
-      force: true
-
+- name: Applications - tmux
   tags:
     - install
     - install-tmux
     - update
     - update-tmux
+
+  block:
+    - name: Install tmux
+      become: true
+      package:
+        name: tmux
+
+    - name: Install tmux bash completion
+      become: true
+      become_user: aur_builder
+      kewlfft.aur.aur:
+        name: tmux-bash-completion-git
+        state: present
+        use: yay
+
+    - name: Install tmux plugin manager
+      become: true
+      become_user: aur_builder
+      kewlfft.aur.aur:
+        name: tmux-plugin-manager
+        state: present
+        use: yay
+
+    - name: Stow tmux dotfiles
+      stow:
+        folders: [tmux]
+        dotfiles_dir: "{{ dotfiles_dir }}"
+        force: true

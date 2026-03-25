@@ -1,4 +1,4 @@
-- name: Install mise
+- name: Application - mise
   tags:
     - install
     - install-development
@@ -6,6 +6,7 @@
     - update
     - update-development
     - update-mise
+
   block:
     - name: Install mise
       become: true
@@ -20,3 +21,4 @@
 
     - name: Install mise tools from config
       command: mise install
+      changed_when: false

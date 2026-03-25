@@ -1,1 +1,2 @@
-- import_tasks: hyprland.yaml
+- name: Desktop - Hyprland
+  import_tasks: hyprland.yaml

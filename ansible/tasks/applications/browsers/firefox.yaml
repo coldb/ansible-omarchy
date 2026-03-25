@@ -1,9 +1,4 @@
-- block:
-  - name: Install firefox
-    become: true
-    package:
-      name: firefox
-
+- name: Applications - Browsers - Firefox
   tags:
     - install
     - install-browsers
@@ -11,3 +6,9 @@
     - update
     - update-browsers
     - update-firefox
+
+  block:
+    - name: Install firefox
+      become: true
+      package:
+        name: firefox

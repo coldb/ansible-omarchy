@@ -1,3 +1,6 @@
-- import_tasks: brave.yaml
-- import_tasks: chrome.yaml
-- import_tasks: firefox.yaml
+- name: Applications - Brave
+  import_tasks: brave.yaml
+- name: Applications - Chrome
+  import_tasks: chrome.yaml
+- name: Applications - Firefox
+  import_tasks: firefox.yaml

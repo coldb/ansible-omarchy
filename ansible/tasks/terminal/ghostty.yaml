@@ -1,12 +1,13 @@
-- block:
-  - name: Stow ghostty dotfiles
-    stow:
-      folders: [ghostty]
-      dotfiles_dir: "{{ dotfiles_dir }}"
-      force: true
-
+- name: Terminal - Ghostty
   tags:
     - install
     - install-ghostty
     - update
     - update-ghostty
+
+  block:
+    - name: Stow ghostty dotfiles
+      stow:
+        folders: [ghostty]
+        dotfiles_dir: "{{ dotfiles_dir }}"
+        force: true

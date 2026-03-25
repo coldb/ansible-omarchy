@@ -1,9 +1,4 @@
-- block:
-  - name: Install Cursor
-    become: true
-    package:
-      name: cursor-bin
-
+- name: Applications - AI - Cursor
   tags:
     - install
     - install-ai
@@ -11,3 +6,9 @@
     - update
     - update-ai
     - update-cursor
+
+  block:
+    - name: Install Cursor
+      become: true
+      package:
+        name: cursor-bin

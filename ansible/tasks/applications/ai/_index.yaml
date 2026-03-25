@@ -1,2 +1,4 @@
-- import_tasks: claude-code.yaml
-- import_tasks: cursor.yaml
+- name: Applications - Claude Code
+  import_tasks: claude-code.yaml
+- name: Applications - Cursor
+  import_tasks: cursor.yaml

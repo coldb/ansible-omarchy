@@ -1,10 +1,20 @@
-- import_tasks: ai/_index.yaml
-- import_tasks: browsers/_index.yaml
-- import_tasks: flux.yaml
-- import_tasks: k9s.yaml
-- import_tasks: kubectl.yaml
-- import_tasks: mise.yaml
-- import_tasks: neovim.yaml
-- import_tasks: pgcli.yaml
-- import_tasks: thunderbird.yaml
-- import_tasks: tmux.yaml
+- name: Applications - AI
+  import_tasks: ai/_index.yaml
+- name: Applications - Browsers
+  import_tasks: browsers/_index.yaml
+- name: Applications - Flux
+  import_tasks: flux.yaml
+- name: Applications - K9s
+  import_tasks: k9s.yaml
+- name: Applications - Kubectl
+  import_tasks: kubectl.yaml
+- name: Applications - Mise
+  import_tasks: mise.yaml
+- name: Applications - Neovim
+  import_tasks: neovim.yaml
+- name: Applications - Pgcli
+  import_tasks: pgcli.yaml
+- name: Applications - Thunderbird
+  import_tasks: thunderbird.yaml
+- name: Applications - Tmux
+  import_tasks: tmux.yaml
