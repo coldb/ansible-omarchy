@@ -20,17 +20,11 @@
       state: present
       use: yay
 
-  - name: Remove default tmux config
-    file:
-      path: "{{ home_dir }}/.config/tmux/tmux.conf"
-      state: absent
-
   - name: Stow tmux dotfiles
-    command: "./stow_install"
-    args:
-      chdir: "{{ dotfiles_dir }}"
-    environment:
-      STOW_FOLDERS: "tmux"
+    stow:
+      folders: [tmux]
+      dotfiles_dir: "{{ dotfiles_dir }}"
+      force: true
 
   tags:
     - install

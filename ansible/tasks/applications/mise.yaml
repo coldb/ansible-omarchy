@@ -12,17 +12,11 @@
       package:
         name: mise
 
-    - name: Remove existing mise config before stowing
-      file:
-        path: "{{ home_dir }}/.config/mise/config.toml"
-        state: absent
-
     - name: Stow mise dotfiles
-      command: "./stow_install"
-      args:
-        chdir: "{{ dotfiles_dir }}"
-      environment:
-        STOW_FOLDERS: "mise"
+      stow:
+        folders: [mise]
+        dotfiles_dir: "{{ dotfiles_dir }}"
+        force: true
 
     - name: Install mise tools from config
       command: mise install

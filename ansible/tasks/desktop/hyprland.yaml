@@ -1,29 +1,9 @@
 - block:
-  - name: Find hyprland dotfiles
-    find:
-      paths: "{{ dotfiles_dir }}/hypr/.config/hypr"
-      file_type: file
-    register: hyprland_source_files
-
-  - name: Check for existing hyprland dotfiles
-    stat:
-      path: "{{ home_dir }}/.config/hypr/{{ item.path | basename }}"
-    loop: "{{ hyprland_source_files.files }}"
-    register: hyprland_dotfiles
-
-  - name: Remove existing hyprland dotfiles if not symlinks
-    file:
-      path: "{{ item.stat.path }}"
-      state: absent
-    loop: "{{ hyprland_dotfiles.results }}"
-    when: item.stat.exists and not item.stat.islnk
-
   - name: Stow hyprland dotfiles
-    command: "./stow_install"
-    args:
-      chdir: "{{ dotfiles_dir }}"
-    environment:
-      STOW_FOLDERS: "hypr"
+    stow:
+      folders: [hypr]
+      dotfiles_dir: "{{ dotfiles_dir }}"
+      force: true
 
   - name: Reload hyprland config
     command: hyprctl reload

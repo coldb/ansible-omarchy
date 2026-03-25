@@ -33,11 +33,9 @@
       validate: "visudo -cf %s"
 
   - name: Setup the bin dotfiles
-    command: "./stow_install"
-    args:
-      chdir: "{{ dotfiles_dir }}"
-    environment:
-      STOW_FOLDERS: "bin"
+    stow:
+      folders: [bin]
+      dotfiles_dir: "{{ dotfiles_dir }}"
 
   tags:
     - always

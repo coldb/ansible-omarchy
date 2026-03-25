@@ -32,27 +32,11 @@
       repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
       dest: "{{ home_dir }}/.oh-my-zsh/plugins/zsh-autosuggestions"
 
-  - name: Check for existing zsh dotfiles
-    stat:
-      path: "{{ home_dir }}/{{ item }}"
-    loop:
-      - .zshrc
-      - .zsh_profile
-    register: zsh_dotfiles
-
-  - name: Remove existing zsh dotfiles if not symlinks
-    file:
-      path: "{{ item.stat.path }}"
-      state: absent
-    loop: "{{ zsh_dotfiles.results }}"
-    when: item.stat.exists and not item.stat.islnk
-
   - name: Stow zsh dotfiles
-    command: "./stow_install"
-    args:
-      chdir: "{{ dotfiles_dir }}"
-    environment:
-      STOW_FOLDERS: "zsh"
+    stow:
+      folders: [zsh]
+      dotfiles_dir: "{{ dotfiles_dir }}"
+      force: true
 
   tags:
     - install

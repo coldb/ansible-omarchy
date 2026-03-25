@@ -5,11 +5,9 @@
       name: neovim
 
   - name: Stow neovim dotfiles
-    command: "./stow_install"
-    args:
-      chdir: "{{ dotfiles_dir }}"
-    environment:
-      STOW_FOLDERS: "neovim"
+    stow:
+      folders: [neovim]
+      dotfiles_dir: "{{ dotfiles_dir }}"
 
   tags:
     - install
