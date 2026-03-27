@@ -3,6 +3,13 @@ vim.g.maplocalleader = " "
 
 vim.g.have_nerd_font = true
 
+-- Start an additional server socket matching the nvim.PID.0 pattern for tmux-open-nvim compatibility
+local runtime_dir = vim.env.XDG_RUNTIME_DIR or ("/run/user/" .. vim.fn.getenv("UID"))
+local compat_sock = runtime_dir .. "/nvim." .. vim.fn.getpid() .. ".0"
+if vim.fn.filereadable(compat_sock) == 0 then
+  pcall(vim.fn.serverstart, compat_sock)
+end
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
