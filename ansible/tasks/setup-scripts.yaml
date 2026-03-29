@@ -1,0 +1,6 @@
+- name: Setup the bin dotfiles
+  tags:
+    - always
+  stow:
+    folders: [bin]
+    dotfiles_dir: "{{ dotfiles_dir }}"
