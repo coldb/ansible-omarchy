@@ -15,7 +15,7 @@ else
         selected="$selected\n$script_output"
     fi
 
-    selected=$(echo -e "$selected\n$(find ~/ ~/work/ ~/personal/ ~/worktree/ -mindepth 1 -maxdepth 1 -type d 2> /dev/null)" | grep -v '^$'| fzf --tac --info=hidden)
+    selected=$(echo -e "$selected\n$(find ~/ ~/work/ ~/personal/ ~/worktree/ -mindepth 1 -maxdepth 1 -type d 2> /dev/null)" | grep -v '^$' | sort -u | fzf --tac --info=hidden)
 fi
 
 if [[ -z $selected ]]; then
