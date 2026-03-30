@@ -8,6 +8,7 @@
         username: "{{ ansible_facts['user_id'] }}"
         home_dir: "{{ ansible_facts['env']['HOME'] }}"
         dotfiles_dir: "{{ (playbook_dir ~ '/../dotfiles') | realpath }}"
+        personal_dir: "{{ ansible_facts['env']['HOME'] }}/personal"
 
     - name: Display all facts
       debug:
@@ -15,6 +16,7 @@
           - "username: {{ username }}"
           - "home_dir: {{ home_dir }}"
           - "dotfiles_dir: {{ dotfiles_dir }}"
+          - "personal_dir: {{ personal_dir }}"
 
     - name: Install stow
       become: true
@@ -36,4 +38,3 @@
         create: true
         mode: "0440"
         validate: "visudo -cf %s"
-
