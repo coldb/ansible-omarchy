@@ -11,7 +11,9 @@
     - name: Install neovim
       become: true
       package:
-        name: neovim
+        name:
+          - neovim
+          - tree-sitter-cli
 
     - name: Stow neovim dotfiles
       stow:
