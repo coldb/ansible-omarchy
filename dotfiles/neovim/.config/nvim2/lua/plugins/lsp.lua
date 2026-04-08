@@ -1,3 +1,5 @@
+local completion_debounce_ms = 1000
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -52,6 +54,14 @@ return {
         },
       })
 
+      vim.lsp.config("ts_ls", {
+        root_markers = { "package.json", "tsconfig.json", "jsconfig.json" },
+      })
+
+      vim.lsp.config("denols", {
+        root_markers = { "deno.json", "deno.jsonc" },
+      })
+
       -- Detect Ansible YAML files
       vim.filetype.add({
         pattern = {
@@ -91,8 +101,28 @@ return {
           map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
           -- Enable native LSP completion
-          vim.opt.completeopt = { "menu", "menuone", "noinsert", "popup" }
+          vim.opt.completeopt = { "menu", "menuone", "noselect", "popup" }
           vim.lsp.completion.enable(true, event.data.client_id, event.buf, { autotrigger = true })
+
+          -- Trigger completions after 1s of idle typing (autotrigger alone only fires on server triggerCharacters)
+          local completion_timer = vim.uv.new_timer()
+          vim.api.nvim_create_autocmd("InsertCharPre", {
+            buffer = event.buf,
+            callback = function()
+              completion_timer:stop()
+              completion_timer:start(completion_debounce_ms, 0, vim.schedule_wrap(function()
+                if vim.fn.pumvisible() == 0 and vim.api.nvim_get_mode().mode == "i" then
+                  vim.lsp.completion.get()
+                end
+              end))
+            end,
+          })
+          vim.api.nvim_create_autocmd("InsertLeave", {
+            buffer = event.buf,
+            callback = function() completion_timer:stop() end,
+          })
+
+          vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { buffer = event.buf, desc = "Trigger LSP completion" })
 
           -- Snippet navigation keymaps
           vim.keymap.set({ "i", "s" }, "<C-l>", function()
