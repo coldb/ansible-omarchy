@@ -32,18 +32,19 @@ end
 
 _G.my_custom_function = my_custom_function
 -- Function to open or create a file in the specified directory
-local function open_or_create_file()
+local function open_or_create_file(cmd)
+  cmd = cmd or "edit"
   local target_directory = "~/personal/code/lab-trimble/"
   local cwd = vim.fn.getcwd()
   local folder_name = cwd:match("([^/]+)$")
   local file_path = target_directory .. folder_name .. ".md"
 
-  -- Open the file (creates it if it doesn't exist)
-  vim.cmd("edit " .. file_path)
+  vim.cmd(cmd .. " " .. file_path)
 end
 _G.open_or_create_file = open_or_create_file
 
 vim.api.nvim_set_keymap("n", "<leader>n", "<Cmd>lua open_or_create_file()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>N", "<Cmd>lua open_or_create_file('vsplit')<CR>", { noremap = true, silent = true })
 
 -- Check for external file changes when focusing Neovim or leaving a terminal
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
