@@ -69,3 +69,8 @@ vim.opt.swapfile = false
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+-- Style floating windows (hover, diagnostics, signature help)
+vim.o.winborder = "rounded"
+vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+vim.api.nvim_set_hl(0, "FloatBorder", { link = "Comment" })
