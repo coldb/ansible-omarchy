@@ -19,22 +19,17 @@ return { -- Autoformat
       -- languages here or re-enable it for the disabled ones.
       local disable_filetypes = { c = true, cpp = true }
       return {
-        timeout_ms = 500,
+        timeout_ms = 1000,
         lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
       }
     end,
     formatters_by_ft = {
       lua = { "stylua" },
-      -- Conform can also run multiple formatters sequentially
-      -- python = { "isort", "black" },
-      --
-      -- You can use a sub-list to tell conform to run *until* a formatter
-      -- is found.
-      json = { "prettierd", "prettier" },
-      javascript = { "prettierd", "prettier" },
-      javascriptreact = { "prettierd", "prettier" },
-      typescript = { "prettierd", "prettier" },
-      typescriptreact = { "prettierd", "prettier" },
+      json = { "prettierd" },
+      javascript = { "eslint_d", "prettierd" },
+      javascriptreact = { "eslint_d", "prettierd" },
+      typescript = { "eslint_d", "prettierd" },
+      typescriptreact = { "eslint_d", "prettierd" },
     },
   },
 }

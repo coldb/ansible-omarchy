@@ -21,7 +21,6 @@ return {
           "eslint_d",
           "graphql-language-service-cli",
           "lua-language-server",
-          "prettier",
           "prettierd",
           "stylua",
           "typescript-language-server",
@@ -137,8 +136,9 @@ return {
             end
           end, { buffer = event.buf, desc = "Snippet: Jump backward" })
 
-          -- Document highlight on CursorHold
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+          -- Document highlight on CursorHold
           if client and client.server_capabilities.documentHighlightProvider then
             local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
