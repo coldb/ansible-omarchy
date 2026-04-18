@@ -5,7 +5,7 @@ return {
   lazy = false,
   config = function()
     require("nvim-treesitter").setup({})
-    require("nvim-treesitter").install({ "bash", "c", "diff", "html", "javascript", "jsdoc", "lua", "luadoc", "markdown", "query", "tsx", "typescript", "vim", "vimdoc" })
+    require("nvim-treesitter").install({ "bash", "c", "diff", "html", "javascript", "jsdoc", "lua", "luadoc", "markdown", "query", "tsx", "typescript", "vim", "vimdoc", "yaml" })
 
     vim.api.nvim_create_autocmd("FileType", {
       callback = function(args)
