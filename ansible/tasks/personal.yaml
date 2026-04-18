@@ -1,0 +1,19 @@
+- name: Setup Personal Development environment
+  tags:
+    - install
+    - install-personal
+    - update
+    - update-personal
+  block:
+    - name: Clone Ansible Omarchy Personal repository # noqa: latest[git]
+      git:
+        repo: "git@github.com:coldb/ansible-omarchy-personal.git"
+        dest: "{{ personal_dir }}/ansible-omarchy-personal"
+        update: false
+        force: false
+
+    - name: Run setup tag in Ansible Omarcy Personal
+      command: ansible-playbook -t setup ansible/local-setup-bin.yaml
+      args:
+        chdir: "{{ personal_dir }}/ansible-omarchy-personal"
+      changed_when: true

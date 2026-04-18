@@ -16,3 +16,5 @@
       import_tasks: tasks/shell/_index.yaml
     - name: Terminal
       import_tasks: tasks/terminal/_index.yaml
+    - name: Personal Development Environment
+      import_tasks: tasks/personal.yaml

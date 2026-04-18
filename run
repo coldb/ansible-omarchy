@@ -1,7 +1,7 @@
 #!/bin/bash
 cd "$(dirname "$0")"
 
-personal_dir="$HOME/ansible-omarchy-personal"
+personal_dir="$HOME/personal/ansible-omarchy-personal"
 if [ -d "$personal_dir" ]; then
   choice=$(printf 'general\npersonal\n' | fzf --prompt="Select playbook: ")
   if [ -z "$choice" ]; then
@@ -15,7 +15,6 @@ fi
 
 # Define available tags. Mark with :vault if --ask-vault-pass is needed.
 tags=(
-  "install:vault"
   "install-ai"
   "install-brave"
   "install-browsers"
@@ -32,13 +31,14 @@ tags=(
   "install-kubectl"
   "install-mise"
   "install-neovim"
+  "install-personal"
   "install-pgcli"
   "install-ssh:vault"
   "install-thunderbird"
   "install-tmux"
   "install-zsh"
+  "install:vault"
   "setup"
-  "update:vault"
   "update-ai"
   "update-brave"
   "update-browsers"
@@ -55,11 +55,13 @@ tags=(
   "update-kubectl"
   "update-mise"
   "update-neovim"
+  "update-personal"
   "update-pgcli"
   "update-ssh:vault"
   "update-thunderbird"
   "update-tmux"
   "update-zsh"
+  "update:vault"
 )
 
 source ~/ansible-omarchy/lib/ansible-run.sh
