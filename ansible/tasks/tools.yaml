@@ -1,0 +1,23 @@
+- name: Setup tools
+  tags:
+    - install
+    - install-tools
+    - update
+    - update-tools
+  block:
+    - name: Install basic tools
+      become: true
+      package:
+        name: "{{ item }}"
+      with_items:
+        - "arch-audit"
+        - "sops"
+        - "age"
+        - "caligula"
+
+    - name: Install Basic tools from AUR
+      kewlfft.aur.aur:
+        name: "{{ item }}"
+        state: present
+        use: yay
+      with_items: []

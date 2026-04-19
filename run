@@ -36,6 +36,7 @@ tags=(
   "install-ssh:vault"
   "install-thunderbird"
   "install-tmux"
+  "install-tools"
   "install-zsh"
   "install:vault"
   "setup"
@@ -60,6 +61,7 @@ tags=(
   "update-ssh:vault"
   "update-thunderbird"
   "update-tmux"
+  "update-tools"
   "update-zsh"
   "update:vault"
 )

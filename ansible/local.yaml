@@ -8,6 +8,8 @@
       import_tasks: tasks/setup-scripts.yaml
     - name: Applications
       import_tasks: tasks/applications/_index.yaml
+    - name: Tools
+      import_tasks: tasks/tools.yaml
     - name: SSH
       import_tasks: tasks/ssh.yaml
     - name: Desktop
