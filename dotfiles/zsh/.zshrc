@@ -110,7 +110,7 @@ source ~/.zsh_profile
 if command -v nvim &> /dev/null; then
   alias vi="NVIM_APPNAME=nvim2 nvim"
   alias vim=nvim
-  export EDITOR="/usr/local/bin/nvim"
+  export EDITOR="/usr/bin/nvim"
 fi
 
 # Personal zsh config include if exists
