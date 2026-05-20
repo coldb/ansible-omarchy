@@ -2,3 +2,5 @@
   import_tasks: claude-code.yaml
 - name: Applications - Cursor
   import_tasks: cursor.yaml
+- name: Applications - T3 Code
+  import_tasks: t3code.yaml

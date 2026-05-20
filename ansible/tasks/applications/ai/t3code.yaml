@@ -1,0 +1,17 @@
+- name: Applications - AI - Cursor
+  tags:
+    - install
+    - install-ai
+    - install-t3code
+    - update
+    - update-ai
+    - update-t3code
+
+  block:
+    - name: Install t3code
+      become: true
+      become_user: aur_builder
+      kewlfft.aur.aur:
+        name: t3code-bin
+        state: present
+        use: yay
