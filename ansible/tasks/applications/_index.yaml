@@ -2,6 +2,8 @@
   import_tasks: ai/_index.yaml
 - name: Applications - Browsers
   import_tasks: browsers/_index.yaml
+- name: Applications - Docker GPU Support
+  import_tasks: docker-gpu-support.yaml
 - name: Applications - Flux
   import_tasks: flux.yaml
 - name: Applications - K9s

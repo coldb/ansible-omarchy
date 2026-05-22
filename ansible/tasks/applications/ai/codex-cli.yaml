@@ -1,0 +1,14 @@
+- name: Applications - AI - Codex CLI
+  tags:
+    - install
+    - install-ai
+    - install-codex-cli
+    - update
+    - update-ai
+    - update-codex-cli
+
+  block:
+    - name: Install Codex CLI
+      become: true
+      package:
+        name: openai-codex

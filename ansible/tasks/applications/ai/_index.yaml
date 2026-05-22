@@ -1,3 +1,5 @@
+- name: Applications - Codex CLI
+  import_tasks: codex-cli.yaml
 - name: Applications - Claude Code
   import_tasks: claude-code.yaml
 - name: Applications - Cursor
