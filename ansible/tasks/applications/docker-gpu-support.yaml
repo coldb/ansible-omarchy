@@ -1,0 +1,45 @@
+- name: Applications - Docker GPU Support
+  tags:
+    - install-docker-gpu-support
+    - update-docker-gpu-support
+
+  block:
+    - name: Install NVIDIA container toolkit
+      become: true
+      package:
+        name: nvidia-container-toolkit
+        state: present
+
+    - name: Check Docker daemon config
+      become: true
+      stat:
+        path: /etc/docker/daemon.json
+      register: docker_daemon_config_stat
+
+    - name: Back up Docker daemon config
+      become: true
+      copy:
+        src: /etc/docker/daemon.json
+        dest: /etc/docker/daemon.json.bak
+        remote_src: true
+        force: false
+        mode: "0644"
+      when: docker_daemon_config_stat.stat.exists
+
+    - name: Configure NVIDIA runtime for Docker
+      become: true
+      command: nvidia-ctk runtime configure --runtime=docker
+      register: nvidia_runtime_configure
+      changed_when: true
+
+    - name: Generate NVIDIA CDI config
+      become: true
+      command: nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
+      register: nvidia_cdi_generate
+      changed_when: true
+
+    - name: Restart Docker
+      become: true
+      service:
+        name: docker
+        state: restarted
