@@ -1,3 +1,20 @@
+- name: Applications - Browser crash mitigation flags
+  tags:
+    - patch-browsers
+
+  block:
+    - name: Disable accelerated video decode for Chromium-family browsers
+      ansible.builtin.lineinfile:
+        path: "{{ item }}"
+        line: "--disable-accelerated-video-decode"
+        state: present
+        create: true
+        mode: "0644"
+      loop:
+        - "{{ home_dir }}/.config/chromium-flags.conf"
+        - "{{ home_dir }}/.config/brave-flags.conf"
+        - "{{ home_dir }}/.config/chrome-flags.conf"
+
 - name: Applications - Brave
   import_tasks: brave.yaml
 - name: Applications - Chrome

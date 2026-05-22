@@ -42,6 +42,7 @@ tags=(
   "install-tools"
   "install-zsh"
   "install:vault"
+  "patch-browsers"
   "setup"
   "update-ai"
   "update-brave"
