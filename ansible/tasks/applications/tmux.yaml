@@ -9,15 +9,9 @@
     - name: Install tmux
       become: true
       package:
-        name: tmux
-
-    - name: Install tmux bash completion
-      become: true
-      become_user: aur_builder
-      kewlfft.aur.aur:
-        name: bash-completion-git
-        state: present
-        use: yay
+        name:
+          - tmux
+          - bash-completion
 
     - name: Install tmux tpack-bin
       become: true
