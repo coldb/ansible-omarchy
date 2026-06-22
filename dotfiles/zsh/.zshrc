@@ -159,3 +159,8 @@ fi
 
 # Set VIM edit mode
 # set -o vi
+
+# Added by uv's installer to expose binaries from ~/.local/bin.
+if [ -f "$HOME/.local/share/../bin/env" ]; then
+    . "$HOME/.local/share/../bin/env"
+fi
