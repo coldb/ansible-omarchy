@@ -15,15 +15,15 @@
       become: true
       become_user: aur_builder
       kewlfft.aur.aur:
-        name: tmux-bash-completion-git
+        name: bash-completion-git
         state: present
         use: yay
 
-    - name: Install tmux plugin manager
+    - name: Install tmux tpack-bin
       become: true
       become_user: aur_builder
       kewlfft.aur.aur:
-        name: tmux-plugin-manager
+        name: tpack-bin
         state: present
         use: yay
 
