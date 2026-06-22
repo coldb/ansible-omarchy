@@ -6,11 +6,45 @@
     - update-hyprland
 
   block:
-    - name: Stow hyprland dotfiles
+    - name: Ensure hypr-local config directory exists
+      file:
+        path: "{{ home_dir }}/.config/hypr-local"
+        state: directory
+        mode: "0755"
+
+    - name: Stow hyprland local overlay files
       stow:
         folders: [hypr]
+        target: "{{ home_dir }}"
         dotfiles_dir: "{{ dotfiles_dir }}"
-        force: true
+
+    - name: Source local hyprland overlay from Omarchy config
+      lineinfile:
+        path: "{{ home_dir }}/.config/hypr/hyprland.conf"
+        line: "source = ~/.config/hypr-local/hyprland.conf"
+        insertafter: EOF
+        state: present
+
+    - name: Source local autostart overlay from Omarchy config
+      lineinfile:
+        path: "{{ home_dir }}/.config/hypr/autostart.conf"
+        line: "source = ~/.config/hypr-local/autostart.conf"
+        insertafter: EOF
+        state: present
+
+    - name: Source local bindings overlay from Omarchy config
+      lineinfile:
+        path: "{{ home_dir }}/.config/hypr/bindings.conf"
+        line: "source = ~/.config/hypr-local/bindings.conf"
+        insertafter: EOF
+        state: present
+
+    - name: Source local looknfeel overlay from Omarchy config
+      lineinfile:
+        path: "{{ home_dir }}/.config/hypr/looknfeel.conf"
+        line: "source = ~/.config/hypr-local/looknfeel.conf"
+        insertafter: EOF
+        state: present
 
     - name: Reload hyprland config
       command: hyprctl reload
