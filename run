@@ -40,6 +40,7 @@ tags=(
   "install-thunderbird"
   "install-tmux"
   "install-tools"
+  "install-waybar"
   "install-zsh"
   "install:vault"
   "patch-browsers"
@@ -69,6 +70,7 @@ tags=(
   "update-thunderbird"
   "update-tmux"
   "update-tools"
+  "update-waybar"
   "update-zsh"
   "update:vault"
 )

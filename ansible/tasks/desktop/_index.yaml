@@ -1,2 +1,5 @@
 - name: Desktop - Hyprland
   import_tasks: hyprland.yaml
+
+- name: Desktop - Waybar
+  import_tasks: waybar.yaml

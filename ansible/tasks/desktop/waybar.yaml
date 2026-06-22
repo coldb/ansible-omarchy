@@ -1,0 +1,18 @@
+- name: Desktop - Waybar
+  tags:
+    - install
+    - install-waybar
+    - update
+    - update-waybar
+
+  block:
+    - name: Stow waybar config files
+      stow:
+        folders: [waybar]
+        target: "{{ home_dir }}"
+        dotfiles_dir: "{{ dotfiles_dir }}"
+        force: true
+
+    - name: Restart waybar
+      command: omarchy restart waybar
+      changed_when: false
