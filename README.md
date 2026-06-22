@@ -6,5 +6,5 @@ To trigger the script without first cloning the repository run the following. Th
 
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/coldb/ansible/main/ansible-run | sh
+curl -sSL https://raw.githubusercontent.com/coldb/ansible-omarchy/main/ansible-run | sh
 ```
