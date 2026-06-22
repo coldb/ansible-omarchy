@@ -8,3 +8,7 @@ To trigger the script without first cloning the repository run the following. Th
 ```bash
 curl -sSL https://raw.githubusercontent.com/coldb/ansible-omarchy/main/ansible-run | sh
 ```
+
+## Running from a clone
+
+Use `./run`, not `ansible-playbook` directly. The wrapper installs the required Ansible collections, including `kewlfft.aur`, into the repo-local collection path before starting the playbook.

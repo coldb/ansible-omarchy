@@ -8,9 +8,9 @@ git clone https://github.com/coldb/ansible-omarchy.git
 cd ansible-omarchy
 
 if [ -n "$1" ]; then
-  ansible-playbook ansible/local.yaml -t $1 --ask-become-pass --ask-vault-pass
+  exec ./run "$1"
 else
-  optional_tags="install install-personal install-work"
+  optional_tags="install install-personal"
 
   selected_tags=$(echo "$optional_tags" | tr ' ' '\n' | sort -r | fzf --prompt="What tags to run: " --multi --header="Use tab to multi-select")
 
@@ -18,7 +18,7 @@ else
     tag_list=$(echo "$selected_tags" | tr '\n' ',')
     tag_list=${tag_list%,}
 
-    ansible-playbook ansible/local.yaml -t $tag_list --ask-become-pass --ask-vault-pass
+    exec ./run "$tag_list"
   else
     echo "No tags selected"
   fi
