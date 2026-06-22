@@ -19,6 +19,12 @@
         state: directory
       loop: "{{ key_files }}"
 
+    - name: Add GitHub host key to known_hosts
+      known_hosts:
+        path: "{{ home_dir }}/.ssh/known_hosts"
+        name: github.com
+        key: "{{ lookup('pipe', 'ssh-keyscan -H github.com 2>/dev/null') }}"
+
     - name: Install SSH private key
       copy:
         src: "{{ item.source }}"
