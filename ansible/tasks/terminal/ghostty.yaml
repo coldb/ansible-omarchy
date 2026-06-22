@@ -11,3 +11,12 @@
         folders: [ghostty]
         dotfiles_dir: "{{ dotfiles_dir }}"
         force: true
+
+    - name: Set Ghostty as the default terminal
+      copy:
+        dest: "{{ home_dir }}/.config/xdg-terminals.list"
+        mode: "0644"
+        content: |
+          # Terminal emulator preference order for xdg-terminal-exec
+          # The first found and valid terminal will be used
+          com.mitchellh.ghostty.desktop
