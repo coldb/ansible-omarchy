@@ -46,6 +46,13 @@
         insertafter: EOF
         state: present
 
+    - name: Source local hypridle overlay from Omarchy config
+      lineinfile:
+        path: "{{ home_dir }}/.config/hypr/hypridle.conf"
+        line: "source = ~/.config/hypr-local/hypridle.conf"
+        insertafter: EOF
+        state: present
+
     - name: Reload hyprland config
       command: hyprctl reload
       changed_when: false
