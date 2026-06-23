@@ -6,6 +6,8 @@
       import_tasks: tasks/setup.yaml
     - name: Sound
       import_tasks: tasks/sound.yaml
+    - name: Keyboard
+      import_tasks: tasks/keyboard.yaml
     - name: Setup dotfiles
       import_tasks: tasks/setup-scripts.yaml
     - name: Applications

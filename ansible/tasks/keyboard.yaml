@@ -1,0 +1,122 @@
+- name: Setup keyboard mapping
+  tags:
+    - install-keyboard
+    - install-laptop
+    - update-keyboard
+    - update-laptop
+  block:
+    - name: Install Kanata from AUR
+      become: true
+      become_user: aur_builder
+      kewlfft.aur.aur:
+        name: kanata
+        state: present
+        use: yay
+
+    - name: Ensure keyboard input groups exist
+      become: true
+      group:
+        name: "{{ item }}"
+        system: true
+      with_items:
+        - input
+        - uinput
+
+    - name: Add user to keyboard input groups
+      become: true
+      user:
+        name: "{{ username }}"
+        append: true
+        groups:
+          - input
+          - uinput
+
+    - name: Load uinput module now
+      become: true
+      modprobe:
+        name: uinput
+        state: present
+
+    - name: Load uinput module on boot
+      become: true
+      copy:
+        dest: /etc/modules-load.d/uinput.conf
+        content: "uinput\n"
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Allow uinput group to access uinput device
+      become: true
+      copy:
+        dest: /etc/udev/rules.d/99-uinput.rules
+        content: |
+          KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+        owner: root
+        group: root
+        mode: "0644"
+      register: kanata_uinput_udev_rule
+
+    - name: Reload udev rules
+      become: true
+      command: udevadm control --reload-rules
+      changed_when: false
+      when: kanata_uinput_udev_rule.changed
+
+    - name: Trigger uinput udev rule
+      become: true
+      command: udevadm trigger --subsystem-match=misc --sysname-match=uinput
+      changed_when: false
+      when: kanata_uinput_udev_rule.changed
+
+    - name: Stow kanata dotfiles
+      stow:
+        folders: [kanata]
+        dotfiles_dir: "{{ dotfiles_dir }}"
+      register: kanata_dotfiles
+
+    - name: Validate kanata config
+      command: kanata --cfg "{{ home_dir }}/.config/kanata/config.kbd" --check
+      changed_when: false
+
+    - name: Install kanata systemd service
+      become: true
+      copy:
+        dest: /etc/systemd/system/kanata.service
+        content: |
+          [Unit]
+          Description=Kanata keyboard remapper
+          Documentation=https://github.com/jtroo/kanata
+          After=systemd-udev-settle.service
+
+          [Service]
+          Type=simple
+          User={{ username }}
+          SupplementaryGroups=input uinput
+          Environment=HOME={{ home_dir }}
+          ExecStart=/usr/bin/kanata --cfg {{ home_dir }}/.config/kanata/config.kbd --nodelay --no-wait
+          Restart=on-failure
+          RestartSec=2
+
+          [Install]
+          WantedBy=multi-user.target
+        owner: root
+        group: root
+        mode: "0644"
+      register: kanata_service
+
+    - name: Enable kanata service
+      become: true
+      systemd_service:
+        name: kanata.service
+        enabled: true
+        state: started
+        daemon_reload: true
+
+    - name: Restart kanata service when configuration changes
+      become: true
+      systemd_service:
+        name: kanata.service
+        state: restarted
+        daemon_reload: true
+      when: kanata_dotfiles.changed or kanata_service.changed

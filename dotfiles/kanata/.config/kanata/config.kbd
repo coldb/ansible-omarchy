@@ -1,0 +1,104 @@
+(defcfg
+  process-unmapped-keys yes
+)
+
+(deffakekeys
+  to-base (layer-switch base)
+)
+
+(defalias
+  tap (multi
+    (layer-switch nomods)
+    (on-idle-fakekey to-base tap 20)
+  )
+  
+  layoutest (multi
+    (layer-toggle estonian)
+    (on-idle-fakekey to-base tap 20)
+  )
+  
+  num (layer-toggle numbers)
+
+  a (tap-hold-release-keys $tap-time $hold-time-250 (multi a @tap) lmet $left-hand-keys)
+  s (tap-hold-release-keys $tap-time $hold-time-200 (multi s @tap) lalt $left-hand-keys)
+  d (tap-hold-release-keys $tap-time $hold-time-150 (multi d @tap) lctl $left-hand-keys)
+  f (tap-hold-release-keys $tap-time $hold-time-150 (multi f @tap) lsft $left-hand-keys)
+  j (tap-hold-release-keys $tap-time $hold-time-150 (multi j @tap) rsft $right-hand-keys)
+  k (tap-hold-release-keys $tap-time $hold-time-150 (multi k @tap) rctl $right-hand-keys)
+  ;; try out multi for l key so it could possibly have the alt pressed as well
+  l (tap-hold-release-keys $tap-time $hold-time-200 (multi l @tap) @layoutest $right-hand-keys)
+  ; (tap-hold-release-keys $tap-time $hold-time-250 (multi ; @tap) rmet $right-hand-keys)
+
+  ;; https://en.wikipedia.org/wiki/List_of_Unicode_characters
+  ä (fork (unicode ä) (unicode Ä) (lsft rsft))
+  ö (fork (unicode ö) (unicode Ö) (lsft rsft))
+  ü (fork (unicode ü) (unicode Ü) (lsft rsft))
+  õ (fork (unicode õ) (unicode Õ) (lsft rsft))
+  š (fork (unicode š) (unicode Š) (lsft rsft))
+  ž (fork (unicode ž) (unicode Ž) (lsft rsft))
+  
+  ob S-9
+  cb S-0
+  ast S-8
+)
+
+(defsrc
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft      up
+  lctl lmet lalt           spc            ralt rmet rctl      left down rght
+)
+
+(defvar
+  ;; Note: consider using different time values for your different fingers.
+  ;; For example, your pinkies might be slower to release keys and index
+  ;; fingers faster.
+  tap-time 200
+  hold-time-150 150
+  hold-time-200 200
+  hold-time-250 250
+
+  left-hand-keys (
+    q w e r t
+    a s d f g
+    z x c v b
+  )
+  right-hand-keys (
+    y u i o p
+    h j k l ;
+    n m , . /
+  )
+)
+
+(deflayer base
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    w    e    r    t    _    _    _    _    _    _    _    _
+  @num @a   @s   @d   @f   _    _    @j   @k   @l   @;   _    _ 
+  _    _    _    _    _    _    _    _    _    _    _    _         _
+  _    _    _              _              _    _    _         _    _    _
+)
+
+(deflayer nomods
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    w    e    r    t    _    _    _    _    _    _    _    _
+  @num a    s    d    f    _    _    j    k    @l   ;    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _         _
+  _    _    _              _              _    _    _         _    _    _
+)
+
+(deflayer estonian
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    @ü   @ö   @ä   @õ   _    _    _    _    _    _    _    _
+  @num a    @š   d    f    _    _    @j   k    l    ;    _    _
+  _    @ž   _    _    _    _    _    _    _    _    _    _         _
+  _    _    _              _              _    _    _         _    _    _
+)
+
+(deflayer numbers
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    nlck _    _    _    XX   /    7    8    9    -    _    _    _
+  _    _    _    _    _    XX   @ast 4    5    6    +    _    _
+  _    _    @ob  @cb  .    XX   0    1    2    3    _    _         _
+  _    _    _              _              _    _    _         _    _    _
+)
