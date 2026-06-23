@@ -53,3 +53,27 @@
         create: true
         mode: "0600"
         marker: "# {mark} ANSIBLE MANAGED GITHUB CONFIG"
+
+    - name: Read ansible-omarchy origin remote
+      ansible.builtin.command:
+        argv:
+          - git
+          - remote
+          - get-url
+          - origin
+      args:
+        chdir: "{{ (playbook_dir ~ '/..') | realpath }}"
+      register: ansible_omarchy_origin_remote
+      changed_when: false
+
+    - name: Switch ansible-omarchy origin remote to SSH
+      ansible.builtin.command:
+        argv:
+          - git
+          - remote
+          - set-url
+          - origin
+          - git@github.com:coldb/ansible-omarchy.git
+      args:
+        chdir: "{{ (playbook_dir ~ '/..') | realpath }}"
+      when: ansible_omarchy_origin_remote.stdout == 'https://github.com/coldb/ansible-omarchy.git'
