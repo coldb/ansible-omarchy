@@ -4,6 +4,8 @@
   tasks:
     - name: Setup
       import_tasks: tasks/setup.yaml
+    - name: Sound
+      import_tasks: tasks/sound.yaml
     - name: Setup dotfiles
       import_tasks: tasks/setup-scripts.yaml
     - name: Applications

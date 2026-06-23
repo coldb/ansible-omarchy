@@ -1,0 +1,11 @@
+- name: Setup SOF firmware
+  tags:
+    - install-laptop
+    - install-laptop-sound
+    - update-laptop
+    - update-laptop-sound
+  block:
+    - name: Install SOF firmware
+      become: true
+      package:
+        name: sof-firmware
