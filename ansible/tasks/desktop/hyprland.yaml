@@ -39,6 +39,13 @@
         insertafter: EOF
         state: present
 
+    - name: Source local input overlay from Omarchy config
+      lineinfile:
+        path: "{{ home_dir }}/.config/hypr/input.conf"
+        line: "source = ~/.config/hypr-local/input.conf"
+        insertafter: EOF
+        state: present
+
     - name: Source local looknfeel overlay from Omarchy config
       lineinfile:
         path: "{{ home_dir }}/.config/hypr/looknfeel.conf"

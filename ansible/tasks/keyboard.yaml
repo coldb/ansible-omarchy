@@ -85,6 +85,25 @@
       command: kanata --cfg "{{ home_dir }}/.config/kanata/config.kbd" --check
       changed_when: false
 
+    - name: Read kanata config checksum
+      stat:
+        path: "{{ home_dir }}/.config/kanata/config.kbd"
+        checksum_algorithm: sha256
+      register: kanata_config
+
+    - name: Ensure ansible state directory exists
+      file:
+        path: "{{ home_dir }}/.cache/ansible-omarchy"
+        state: directory
+        mode: "0755"
+
+    - name: Store kanata config checksum
+      copy:
+        dest: "{{ home_dir }}/.cache/ansible-omarchy/kanata-config.sha256"
+        content: "{{ kanata_config.stat.checksum }}\n"
+        mode: "0644"
+      register: kanata_config_checksum
+
     - name: Install kanata systemd service
       become: true
       copy:
@@ -125,4 +144,4 @@
         name: kanata.service
         state: restarted
         daemon_reload: true
-      when: kanata_dotfiles.changed or kanata_service.changed
+      when: kanata_dotfiles.changed or kanata_service.changed or kanata_config_checksum.changed
