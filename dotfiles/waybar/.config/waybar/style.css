@@ -34,10 +34,29 @@
 #battery,
 #pulseaudio,
 #custom-omarchy,
+#custom-kanata,
 
 #custom-update {
   min-width: 12px;
   margin: 0 7.5px;
+}
+
+#custom-kanata {
+  min-width: 24px;
+}
+
+#custom-kanata.estonian {
+  color: #f5c542;
+}
+
+#custom-kanata.numbers {
+  color: #7aa2f7;
+}
+
+#custom-kanata.hidden {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
 }
 
 #tray {

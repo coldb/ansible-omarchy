@@ -13,6 +13,7 @@
     "pulseaudio",
     "cpu",
     "battery",
+    "custom/kanata",
     "clock"
   ],
   "hyprland/workspaces": {
@@ -53,6 +54,13 @@
     "tooltip-format": "Omarchy update available",
     "signal": 7,
     "interval": 21600
+  },
+  "custom/kanata": {
+    "exec": "~/.local/scripts/kanata-layer-waybar",
+    "return-type": "json",
+    "format": "{}",
+    "restart-interval": 1,
+    "tooltip": true
   },
 
   "cpu": {

@@ -1,20 +1,21 @@
 (defcfg
   process-unmapped-keys yes
+  linux-unicode-termination space
 )
 
 (deffakekeys
-  to-base (layer-switch base)
+  to-us (layer-switch us)
 )
 
 (defalias
   tap (multi
     (layer-switch nomods)
-    (on-idle-fakekey to-base tap 20)
+    (on-idle-fakekey to-us tap 20)
   )
   
-  layoutest (multi
-    (layer-toggle estonian)
-    (on-idle-fakekey to-base tap 20)
+  est (switch
+    ((base-layer us)) (layer-switch estonian) break
+    () (layer-switch us) break
   )
   
   num (layer-toggle numbers)
@@ -25,8 +26,7 @@
   f (tap-hold-release-keys $tap-time $hold-time-150 (multi f @tap) lsft $left-hand-keys)
   j (tap-hold-release-keys $tap-time $hold-time-150 (multi j @tap) rsft $right-hand-keys)
   k (tap-hold-release-keys $tap-time $hold-time-150 (multi k @tap) rctl $right-hand-keys)
-  ;; try out multi for l key so it could possibly have the alt pressed as well
-  l (tap-hold-release-keys $tap-time $hold-time-200 (multi l @tap) @layoutest $right-hand-keys)
+  l (tap-hold-release-keys $tap-time $hold-time-200 (multi l @tap) ralt $right-hand-keys)
   ; (tap-hold-release-keys $tap-time $hold-time-250 (multi ; @tap) rmet $right-hand-keys)
 
   ;; https://en.wikipedia.org/wiki/List_of_Unicode_characters
@@ -36,6 +36,15 @@
   õ (fork (unicode õ) (unicode Õ) (lsft rsft))
   š (fork (unicode š) (unicode Š) (lsft rsft))
   ž (fork (unicode ž) (unicode Ž) (lsft rsft))
+
+  aet (tap-hold-release-keys $tap-time $hold-time-250 a lmet $left-hand-keys)
+  set (tap-hold-release-keys $tap-time $hold-time-200 s lalt $left-hand-keys)
+  det (tap-hold-release-keys $tap-time $hold-time-150 d lctl $left-hand-keys)
+  fet (tap-hold-release-keys $tap-time $hold-time-150 f lsft $left-hand-keys)
+  jet (tap-hold-release-keys $tap-time $hold-time-150 j rsft $right-hand-keys)
+  ket (tap-hold-release-keys $tap-time $hold-time-150 k rctl $right-hand-keys)
+  let (tap-hold-release-keys $tap-time $hold-time-200 l ralt $right-hand-keys)
+  oet (tap-hold-release-keys $tap-time $hold-time-250 @ö lmet $left-hand-keys)
   
   ob S-9
   cb S-0
@@ -71,12 +80,12 @@
   )
 )
 
-(deflayer base
+(deflayer us
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    w    e    r    t    _    _    _    _    _    _    _    _
   @num @a   @s   @d   @f   _    _    @j   @k   @l   @;   _    _ 
   _    _    _    _    _    _    _    _    _    _    _    _         _
-  _    _    _              _              _    _    _         _    _    _
+  _    _    _              _              @est _    _         _    _    _
 )
 
 (deflayer nomods
@@ -84,15 +93,15 @@
   _    _    w    e    r    t    _    _    _    _    _    _    _    _
   @num a    s    d    f    _    _    j    k    @l   ;    _    _
   _    _    _    _    _    _    _    _    _    _    _    _         _
-  _    _    _              _              _    _    _         _    _    _
+  _    _    _              _              @est _    _         _    _    _
 )
 
 (deflayer estonian
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    @ü   @ö   @ä   @õ   _    _    _    _    _    _    _    _
-  @num a    @š   d    f    _    _    @j   k    l    ;    _    _
+  _    _    w    e    r    t    _    _    _    _    _    @ü   @õ   _
+  @num @aet @set @det @fet _    _    @jet @ket @let @oet @ä   _
   _    @ž   _    _    _    _    _    _    _    _    _    _         _
-  _    _    _              _              _    _    _         _    _    _
+  _    _    _              _              @est _    _         _    _    _
 )
 
 (deflayer numbers

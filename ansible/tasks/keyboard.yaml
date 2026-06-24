@@ -13,6 +13,12 @@
         state: present
         use: yay
 
+    - name: Install keyboard layer notification tools
+      become: true
+      package:
+        name:
+          - libnotify
+
     - name: Ensure keyboard input groups exist
       become: true
       group:
@@ -94,7 +100,7 @@
           User={{ username }}
           SupplementaryGroups=input uinput
           Environment=HOME={{ home_dir }}
-          ExecStart=/usr/bin/kanata --cfg {{ home_dir }}/.config/kanata/config.kbd --nodelay --no-wait
+          ExecStart=/usr/bin/kanata --cfg {{ home_dir }}/.config/kanata/config.kbd --nodelay --no-wait --port 5829
           Restart=on-failure
           RestartSec=2
 
