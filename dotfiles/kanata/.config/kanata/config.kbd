@@ -6,6 +6,14 @@
   to-us (layer-switch us)
 )
 
+(defvirtualkeys
+  symbols-used XX
+  symbols-space (switch
+    ((input virtual symbols-used)) XX break
+    () spc break
+  )
+)
+
 (defalias
   tap (multi
     (layer-switch nomods)
@@ -18,6 +26,14 @@
   )
   
   num (layer-toggle numbers)
+  sym (switch
+    ((base-layer us)) (tap-hold-press $tap-time $hold-time-250 spc (multi
+      (on-press release-vkey symbols-used)
+      (layer-while-held symbols)
+      (on-release tap-vkey symbols-space)
+    )) break
+    () spc break
+  )
 
   a (tap-hold-release-keys $tap-time $hold-time-250 (multi a @tap) lmet $left-hand-keys)
   s (tap-hold-release-keys $tap-time $hold-time-200 (multi s @tap) lalt $left-hand-keys)
@@ -37,9 +53,24 @@
   let (tap-hold-release-keys $tap-time $hold-time-200 l ralt $right-hand-keys)
   oet (tap-hold-release-keys $tap-time $hold-time-250 ; lmet $left-hand-keys)
   
-  ob S-9
-  cb S-0
-  ast S-8
+  used (on-press press-vkey symbols-used)
+  ob (macro S-9 @used)
+  cb (macro S-0 @used)
+  ast (macro S-8 @used)
+  lb (macro [ @used)
+  lbr (macro S-[ @used)
+  rbr (macro S-] @used)
+  rb (macro ] @used)
+  ques (macro S-/ @used)
+  caret (macro S-6 @used)
+  eq (macro = @used)
+  und (macro S-- @used)
+  dol (macro S-4 @used)
+  lt (macro S-, @used)
+  pipe (macro S-\ @used)
+  minus (macro - @used)
+  gt (macro S-. @used)
+  tilde (macro S-grv @used)
 )
 
 (defsrc
@@ -76,7 +107,7 @@
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   @num @a   @s   @d   @f   _    _    @j   @k   @l   @;   _    _ 
   _    _    _    _    _    _    _    _    _    _    _    _         _
-  _    _    _              _              @est _    _         _    _    _
+  _    _    _              @sym           @est _    _         _    _    _
 )
 
 (deflayer nomods
@@ -84,7 +115,7 @@
   _    _    w    e    r    t    _    _    _    _    _    _    _    _
   @num a    s    d    f    _    _    j    k    l    ;    _    _
   _    _    _    _    _    _    _    _    _    _    _    _         _
-  _    _    _              _              @est _    _         _    _    _
+  _    _    _              @sym           @est _    _         _    _    _
 )
 
 (deflayer estonian
@@ -92,7 +123,7 @@
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   @num @aet @set @det @fet _    _    @jet @ket @let @oet _    _
   _    _    _    _    _    _    _    _    _    _    _    _         _
-  _    _    _              _              @est _    _         _    _    _
+  _    _    _              @sym           @est _    _         _    _    _
 )
 
 (deflayer numbers
@@ -101,4 +132,12 @@
   _    _    _    _    _    XX   @ast 4    5    6    +    _    _
   _    _    @ob  @cb  .    XX   0    1    2    3    _    _         _
   _    _    _              _              _    _    _         _    _    _
+)
+
+(deflayer symbols
+  XX   XX    XX     XX  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   @lb   @lbr   @rbr @rb  @ques XX   XX   XX   XX   XX   XX   XX   XX
+  XX   @caret @eq    @und @dol @ast  XX   XX   XX   XX   XX   XX   XX
+  XX   @lt   @pipe   @minus @gt  XX   XX   XX   XX   XX   XX   XX        XX
+  XX   XX    XX             XX             XX   XX   XX        XX   XX   XX
 )

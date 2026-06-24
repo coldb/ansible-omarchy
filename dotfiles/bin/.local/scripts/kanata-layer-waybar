@@ -13,15 +13,18 @@ NOTIFICATION_ID = "5829"
 KANATA_KEYBOARD_DEVICE = "kanata"
 
 LAYERS = {
-    "us": (" US", "us", "US"),
-    "nomods": (" US", "us", "US"),
-    "estonian": (" ET", "estonian", "Estonian"),
-    "numbers": (" 123", "numbers", "Numbers"),
+    "us": ("  US ", "us", "US"),
+    "nomods": ("  US ", "us", "US"),
+    "estonian": ("  ET ", "estonian", "Estonian"),
+    "numbers": ("  123", "numbers", "Numbers"),
+    "symbols": ("  SYM", "symbols", "Symbols"),
 }
 NOTIFICATION_LAYERS = {"us", "estonian"}
 XKB_LAYOUT_IDS = {
     "us": "0",
     "estonian": "1",
+    "numbers": "0",
+    "symbols": "0",
 }
 
 current_layer = "us"
@@ -102,11 +105,9 @@ def set_layer(layer):
     changed = layer != current_layer
     current_layer = layer
     emit(layer)
+    switch_xkb_layout(layer)
 
     persistent_changed = layer in NOTIFICATION_LAYERS and layer != last_persistent_layer
-    if persistent_changed or (not initialized and layer in NOTIFICATION_LAYERS):
-        switch_xkb_layout(layer)
-
     if changed and persistent_changed:
         last_persistent_layer = layer
         notify(layer)
