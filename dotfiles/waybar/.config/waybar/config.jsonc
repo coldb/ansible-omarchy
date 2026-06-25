@@ -10,6 +10,7 @@
     "tray",
     "bluetooth",
     "network",
+    "custom/openvpn",
     "pulseaudio",
     "cpu",
     "battery",
@@ -61,6 +62,14 @@
     "format": "{}",
     "restart-interval": 1,
     "tooltip": true
+  },
+  "custom/openvpn": {
+    "exec": "~/.local/scripts/openvpn-waybar",
+    "return-type": "json",
+    "format": "{}",
+    "interval": 3,
+    "tooltip": true,
+    "on-click": "tmux has-session -t vpn_full 2>/dev/null && tmux switch-client -t vpn_full || tmux has-session -t vpn_split 2>/dev/null && tmux switch-client -t vpn_split"
   },
 
   "cpu": {

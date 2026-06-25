@@ -35,7 +35,7 @@
 #pulseaudio,
 #custom-omarchy,
 #custom-kanata,
-
+#custom-openvpn,
 #custom-update {
   min-width: 12px;
   margin: 0 7.5px;
@@ -69,6 +69,18 @@
 
 #network {
   margin-right: 13px;
+}
+
+#custom-openvpn.connected {
+  color: #9ece6a;
+}
+
+#custom-openvpn.connecting {
+  color: #f5c542;
+}
+
+#custom-openvpn.disconnected {
+  opacity: 0.6;
 }
 
 #custom-expand-icon {

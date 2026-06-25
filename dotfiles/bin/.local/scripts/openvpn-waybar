@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+FULL_CONFIG="/etc/openvpn/client/vpn-full.conf"
+SPLIT_CONFIG="/etc/openvpn/client/vpn-split.conf"
+
+has_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+openvpn_running_for() {
+  local config="$1"
+  local config_name="${config##*/}"
+
+  has_command pgrep || return 1
+  pgrep -fa openvpn | grep -Eq -- "(--config[ =]${config}|--config[ =]${config_name}|[[:space:]]${config}[[:space:]]|[[:space:]]${config_name}[[:space:]])"
+}
+
+vpn_link_is_up() {
+  has_command ip || return 1
+  ip -brief link show up 2>/dev/null | grep -Eq '^(tun|tap|wg|ppp)[^[:space:]]*[[:space:]]+UP[[:space:]]'
+}
+
+emit() {
+  local text="$1"
+  local css_class="$2"
+  local tooltip="$3"
+
+  printf '{"text":"%s","class":"%s","tooltip":"%s"}\n' "$text" "$css_class" "$tooltip"
+}
+
+if openvpn_running_for "$FULL_CONFIG" && vpn_link_is_up; then
+  emit "󰦝 VPN" "connected" "VPN connected: full"
+elif openvpn_running_for "$SPLIT_CONFIG" && vpn_link_is_up; then
+  emit "󰦝 VPN" "connected" "VPN connected: split"
+elif openvpn_running_for "$FULL_CONFIG"; then
+  emit "󰦝 VPN" "connecting" "VPN starting: full"
+elif openvpn_running_for "$SPLIT_CONFIG"; then
+  emit "󰦝 VPN" "connecting" "VPN starting: split"
+else
+  emit "󰦝" "disconnected" "VPN disconnected"
+fi

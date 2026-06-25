@@ -1,4 +1,7 @@
 (defcfg
+  linux-dev-names-include (
+    "AT Translated Set 2 keyboard"
+  )
   process-unmapped-keys yes
 )
 
