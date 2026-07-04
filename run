@@ -46,6 +46,7 @@ tags=(
   "install-waybar"
   "install-zsh"
   "install:vault"
+  "laptop-scaling"
   "patch-browsers"
   "setup"
   "update-ai"

@@ -53,10 +53,39 @@
         insertafter: EOF
         state: present
 
-    - name: Source local hypridle overlay from Omarchy config
+    - name: Replace Omarchy hypridle config with local config
+      copy:
+        src: "{{ home_dir }}/.config/hypr-local/hypridle.conf"
+        dest: "{{ home_dir }}/.config/hypr/hypridle.conf"
+        remote_src: true
+        mode: "0644"
+
+    - name: Restart hypridle
+      systemd:
+        name: hypridle.service
+        scope: user
+        state: restarted
+      changed_when: true
+
+    - name: Reload hyprland config
+      command: hyprctl reload
+      changed_when: false
+
+- name: Desktop - Hyprland small screen scaling
+  tags:
+    - laptop-scaling
+
+  block:
+    - name: Stow hyprland small screen scaling file
+      stow:
+        folders: [hypr]
+        target: "{{ home_dir }}"
+        dotfiles_dir: "{{ dotfiles_dir }}"
+
+    - name: Source small screen scaling from Omarchy config
       lineinfile:
-        path: "{{ home_dir }}/.config/hypr/hypridle.conf"
-        line: "source = ~/.config/hypr-local/hypridle.conf"
+        path: "{{ home_dir }}/.config/hypr/hyprland.conf"
+        line: "source = ~/.config/hypr-local/small-screen-scaling.conf"
         insertafter: EOF
         state: present
 
