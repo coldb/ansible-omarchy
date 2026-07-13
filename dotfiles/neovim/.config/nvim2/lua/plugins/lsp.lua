@@ -23,7 +23,7 @@ return {
           "lua-language-server",
           "prettierd",
           "stylua",
-          "typescript-language-server",
+          "tsgo",
           "yaml-language-server",
         },
       })
@@ -53,10 +53,6 @@ return {
         },
       })
 
-      vim.lsp.config("ts_ls", {
-        root_markers = { "package.json", "tsconfig.json", "jsconfig.json" },
-      })
-
       vim.lsp.config("denols", {
         root_markers = { "deno.json", "deno.jsonc" },
       })
@@ -77,7 +73,7 @@ return {
       -- Enable servers (definitions come from nvim-lspconfig's lsp/ runtime files)
       vim.lsp.enable({
         "ansiblels",
-        "ts_ls",
+        "tsgo",
         "denols",
         "graphql",
         "yamlls",
