@@ -1,4 +1,4 @@
-local completion_debounce_ms = 1000
+local completion_debounce_ms = 500
 
 return {
   {
@@ -103,22 +103,34 @@ return {
           vim.opt.completeopt = { "menu", "menuone", "noselect", "popup" }
           vim.lsp.completion.enable(true, event.data.client_id, event.buf, { autotrigger = true })
 
-          -- Trigger completions after 1s of idle typing (autotrigger alone only fires on server triggerCharacters)
+          -- Trigger completions on any keystroke (autotrigger alone only fires on server triggerCharacters).
+          -- Timer must be killed on ModeChanged too, not just InsertLeave, otherwise a late
+          -- complete() callback races with which-key's getcharstr() and causes "Keyboard interrupt".
           local completion_timer = vim.uv.new_timer()
           vim.api.nvim_create_autocmd("InsertCharPre", {
             buffer = event.buf,
             callback = function()
               completion_timer:stop()
-              completion_timer:start(completion_debounce_ms, 0, vim.schedule_wrap(function()
-                if vim.fn.pumvisible() == 0 and vim.api.nvim_get_mode().mode == "i" then
-                  vim.lsp.completion.get()
-                end
-              end))
+              completion_timer:start(
+                completion_debounce_ms,
+                0,
+                vim.schedule_wrap(function()
+                  if vim.api.nvim_get_mode().mode ~= "i" then
+                    return
+                  end
+                  if vim.fn.pumvisible() == 0 then
+                    vim.lsp.completion.get()
+                  end
+                end)
+              )
             end,
           })
-          vim.api.nvim_create_autocmd("InsertLeave", {
+          -- Stop timer on any mode exit to prevent complete() firing outside insert mode
+          vim.api.nvim_create_autocmd({ "InsertLeave", "ModeChanged" }, {
             buffer = event.buf,
-            callback = function() completion_timer:stop() end,
+            callback = function()
+              completion_timer:stop()
+            end,
           })
 
           vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { buffer = event.buf, desc = "Trigger LSP completion" })
