@@ -30,14 +30,13 @@
   )
   
   num (layer-toggle numbers)
-  ;; f24 avoids Linux repeat leakage when space is pressed while another key is held.
   ;; tap-hold-release keeps the symbols layer from activating on ordinary fast rolls.
   sym (switch
-    ((base-layer us)) (multi f24 (tap-hold-release $tap-time $hold-time-250 spc (multi
+    ((base-layer us)) (tap-hold-release $tap-time $hold-time-250 spc (multi
       (on-press release-vkey symbols-used)
       (layer-while-held symbols)
       (on-release tap-vkey symbols-space)
-    ))) break
+    )) break
     () spc break
   )
 
