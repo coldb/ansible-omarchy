@@ -1,7 +1,3 @@
 # TODO
 
-- [ ] Go over the tools that should be installed eg. tree
-
-## Shell-Specific Configuration for Zsh
-
-- [ ] Source Omarchy bash aliases in `.zshrc`: `source ~/.local/share/omarchy/default/bash/aliases`
+- Remove the legacy Hyprland config cleanup tasks after all managed systems have migrated to Omarchy 4.0.

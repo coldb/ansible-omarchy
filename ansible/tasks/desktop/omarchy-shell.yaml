@@ -1,0 +1,23 @@
+- name: Desktop - Omarchy Shell
+  tags:
+    - install
+    - install-omarchy-shell
+    - update
+    - update-omarchy-shell
+
+  block:
+    - name: Disable idle timeouts
+      command: omarchy toggle idle stay-awake
+      changed_when: false
+
+    - name: Disable screensaver
+      command: omarchy-toggle screensaver-off on
+      changed_when: false
+
+    - name: Move Omarchy Shell bar to bottom
+      command: omarchy bar position bottom
+      changed_when: false
+
+    - name: Configure custom Omarchy Shell bar widgets
+      command: "{{ home_dir }}/.local/scripts/configure-omarchy-shell"
+      changed_when: false

@@ -8,6 +8,12 @@
     - update-mise
 
   block:
+    - name: Remove conflicting mise-bin package
+      become: true
+      package:
+        name: mise-bin
+        state: absent
+
     - name: Install mise
       become: true
       package:

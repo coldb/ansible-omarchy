@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+source omarchy-shell-config
+
+commit "$NORMALIZE |
+  def entry_id: if type == \"object\" then (.id // \"\" | tostring) else tostring end;
+  .bar.layout.left |= map(select(entry_id != \"openvpn\" and entry_id != \"kanata\")) |
+  .bar.layout.center |= map(select(entry_id != \"openvpn\" and entry_id != \"kanata\")) |
+  .bar.layout.right |= map(select(entry_id != \"openvpn\" and entry_id != \"kanata\")) |
+  (.bar.layout.right | map(entry_id) | index(\"omarchy.audio\")) as \$audio_index |
+  (if \$audio_index == null then (.bar.layout.right | length) else \$audio_index end) as \$vpn_index |
+  .bar.layout.right = (
+    .bar.layout.right[0:\$vpn_index] +
+    [{
+      id: \"openvpn\",
+      type: \"command\",
+      exec: \"\$HOME/.local/scripts/openvpn-status\",
+      interval: 3,
+      onClick: \"\$HOME/.local/scripts/openvpn-session\"
+    }] +
+    .bar.layout.right[\$vpn_index:] +
+    [{
+      id: \"kanata\",
+      type: \"command\",
+      exec: \"\$HOME/.local/scripts/kanata-layer-status\",
+      interval: 1
+    }]
+  )
+"

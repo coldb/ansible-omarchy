@@ -1,7 +1,9 @@
 - name: Setup keyboard mapping
   tags:
+    - install
     - install-keyboard
     - install-laptop
+    - update
     - update-keyboard
     - update-laptop
   block:

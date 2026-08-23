@@ -29,13 +29,13 @@ emit() {
 }
 
 if openvpn_running_for "$FULL_CONFIG" && vpn_link_is_up; then
-  emit "󰦝 VPN" "connected" "VPN connected: full"
+  emit "󰦝 VPN" "active" "VPN connected: full"
 elif openvpn_running_for "$SPLIT_CONFIG" && vpn_link_is_up; then
-  emit "󰦝 VPN" "connected" "VPN connected: split"
+  emit "󰦝 VPN" "active" "VPN connected: split"
 elif openvpn_running_for "$FULL_CONFIG"; then
-  emit "󰦝 VPN" "connecting" "VPN starting: full"
+  emit "󰦝 VPN" "active" "VPN starting: full"
 elif openvpn_running_for "$SPLIT_CONFIG"; then
-  emit "󰦝 VPN" "connecting" "VPN starting: split"
+  emit "󰦝 VPN" "active" "VPN starting: split"
 else
   emit "󰦝" "disconnected" "VPN disconnected"
 fi

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if tmux has-session -t vpn_full 2>/dev/null; then
+  tmux switch-client -t vpn_full
+elif tmux has-session -t vpn_split 2>/dev/null; then
+  tmux switch-client -t vpn_split
+fi

@@ -9,6 +9,8 @@
         home_dir: "{{ ansible_facts['env']['HOME'] }}"
         dotfiles_dir: "{{ (playbook_dir ~ '/../dotfiles') | realpath }}"
         personal_dir: "{{ ansible_facts['env']['HOME'] }}/personal"
+        hyprland_session_active: >-
+          {{ ansible_facts['env'].get('HYPRLAND_INSTANCE_SIGNATURE', '') | length > 0 }}
 
     - name: Display all facts
       debug:
@@ -17,6 +19,7 @@
           - "home_dir: {{ home_dir }}"
           - "dotfiles_dir: {{ dotfiles_dir }}"
           - "personal_dir: {{ personal_dir }}"
+          - "hyprland_session_active: {{ hyprland_session_active }}"
 
     - name: Install stow
       become: true

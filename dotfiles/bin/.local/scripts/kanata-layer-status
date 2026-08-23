@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+import json
+from pathlib import Path
+import shutil
+import socket
+import subprocess
+
+
+HOST = "127.0.0.1"
+PORT = 5829
+NOTIFICATION_ID = "5829"
+KANATA_KEYBOARD_DEVICE = "kanata"
+STATE_FILE = Path.home() / ".local/state/ansible-omarchy/kanata-layer"
+
+LAYERS = {
+    "us": (" US ", "", "US"),
+    "nomods": (" US ", "", "US"),
+    "estonian": (" ET ", "active", "Estonian"),
+    "numbers": (" 123", "active", "Numbers"),
+    "symbols": (" SYM", "active", "Symbols"),
+}
+NOTIFICATION_LAYERS = {"us", "estonian"}
+XKB_LAYOUT_IDS = {
+    "us": "0",
+    "estonian": "1",
+    "numbers": "0",
+    "symbols": "0",
+}
+
+
+def current_layer():
+    try:
+        with socket.create_connection((HOST, PORT), timeout=0.5) as connection:
+            connection.settimeout(0.5)
+            connection.sendall(b'{"RequestCurrentLayerName":{}}\n')
+            with connection.makefile("r", encoding="utf-8", errors="replace") as stream:
+                for line in stream:
+                    event = json.loads(line)
+                    if "CurrentLayerName" in event:
+                        return event["CurrentLayerName"]["name"]
+    except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        return None
+    return None
+
+
+def previous_layer():
+    try:
+        return STATE_FILE.read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+
+
+def remember_layer(layer):
+    STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    STATE_FILE.write_text(f"{layer}\n", encoding="utf-8")
+
+
+def apply_layer_change(layer, previous):
+    layout_id = XKB_LAYOUT_IDS.get(layer)
+    if layout_id is not None and shutil.which("hyprctl"):
+        subprocess.run(
+            ["hyprctl", "switchxkblayout", KANATA_KEYBOARD_DEVICE, layout_id],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+
+    if layer in NOTIFICATION_LAYERS and previous is not None and shutil.which("notify-send"):
+        label = LAYERS.get(layer, (layer, "", layer))[2]
+        subprocess.run(
+            [
+                "notify-send",
+                "--app-name=Kanata",
+                "--replace-id",
+                NOTIFICATION_ID,
+                "Keyboard layer",
+                label,
+            ],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+
+
+layer = current_layer()
+if layer is None:
+    print(json.dumps({"text": " ", "tooltip": "Kanata unavailable"}))
+    raise SystemExit
+
+previous = previous_layer()
+if layer == "nomods":
+    layer = previous or "us"
+
+if layer != previous and layer != "nomods":
+    apply_layer_change(layer, previous)
+    remember_layer(layer)
+
+text, css_class, label = LAYERS.get(layer, (layer, "active", layer))
+print(
+    json.dumps(
+        {
+            "text": text,
+            "class": css_class,
+            "tooltip": f"Keyboard layer: {label}",
+        }
+    )
+)
