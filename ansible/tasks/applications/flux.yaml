@@ -8,10 +8,8 @@
     - update-k8s-tools
 
   block:
-    - name: Install flux-bin
+    - name: Install fluxcd
       become: true
-      become_user: aur_builder
-      kewlfft.aur.aur:
-        name: flux-bin
+      community.general.pacman:
+        name: fluxcd
         state: present
-        use: yay
