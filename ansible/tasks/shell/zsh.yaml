@@ -38,7 +38,7 @@
     - name: Install zsh-autosuggestions plugin
       ansible.builtin.git:
         repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
-        dest: "{{ home_dir }}/.oh-my-zsh/plugins/zsh-autosuggestions"
+        dest: "{{ home_dir }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 
     - name: Stow zsh dotfiles
       stow:
